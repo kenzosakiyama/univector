@@ -1,0 +1,3 @@
+[submodule "linear_algebra_2D"]
+	path = linear_algebra_2D
+	url = https://github.com/kenzosakiyama/linear_algebra_2D.git
