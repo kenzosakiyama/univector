@@ -20,7 +20,7 @@ def wrap2pi(theta: float) -> float:
         return theta
 
     
-def create_axis_from_angle(theta: float) -> Vec2D:
+def create_unit_vector_from_angle(theta: float) -> Vec2D:
     # radianos
     # retorna vetor unitário com a orientação especificada
     return Vec2D(cos(theta), sin(theta))
@@ -298,9 +298,9 @@ class UnivectorField:
                         desired_approach_angle: float,
                         obstacles_pos: List[Vec2D],
                         obstacles_speed: List[Vec2D] = None) -> float:
-        # Método principal que irá executar o algoritmo
-
-        self.mv2Goal.update_axis(target_pos, create_axis_from_angle(desired_approach_angle))
+        # Método principal que irá executar o algoritmo de navegação
+        vec2follow = create_unit_vector_from_angle(desired_approach_angle)
+        self.mv2Goal.update_axis(target_pos, vec2follow)
 
 
         # Verifica se as velocidades foram fornecidas. Caso contrário, utiliza-se velocidades nulas.
