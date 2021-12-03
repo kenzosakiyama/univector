@@ -315,6 +315,14 @@ class UnivectorField:
         closest_center = None  # array to store the closest center
         centers = []
         min_distance = self.DMIN + 1
+
+        # TODO: adicionando bordas como sendo "obstáculos"
+        # TODO: se funcionar da para remover o len(obstacles_pos)
+        # Adicionando bordas da arena como "obstáculos", utilizando a posição X da origem da navegação como referência
+        obstacles_pos = obstacles_pos.copy()
+        obstacles_pos.append( Vec2D(origin_pos[0], 0) )   # Borda inferior
+        obstacles_pos.append( Vec2D(origin_pos[0], 130) ) # Borda superior
+
         has_obstacles = len(obstacles_pos) > 0
 
         # Caso existam obstáculos
