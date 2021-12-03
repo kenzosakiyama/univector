@@ -231,8 +231,12 @@ class UnivectorField:
     @classmethod
     def from_json(cls, parameters_path: str):
         # Cria uma instância do Univector a partir de um arquivo de parametros
-        # TODO: implementar rapidola a leitura de JSON
-        return cls(0,0,0,0,0)
+        import json
+
+        with open(parameters_path, 'r') as f:
+            parameters = json.load(f)
+
+        return cls(**parameters)
     
     @classmethod
     def from_dict(cls, parameters_dict: str):
