@@ -45,9 +45,7 @@ class Navigator:
             correct_axis = goal_pos - target_position
         else:
             if self.attack_goal == TeamSide.RIGHT:
-                # print("uai")
                 if section_num == ArenaSections.RIGHT_DOWN_CORNER or section_num == ArenaSections.RIGHT_UP_CORNER:
-                    print("canto esquerdo")
                     correct_axis = Vec2D.right()
                 else:
                     correct_axis = self._get_correct_axis(target_position, section_num, self.attack_goal)                    
@@ -58,7 +56,9 @@ class Navigator:
                     correct_axis = self._get_correct_axis(target_position, section_num, self.attack_goal)     
         
         offset = self._get_correct_offset(target_position, section_num) 
-        approach_angle = (correct_axis + offset).angle()
+        approach_angle = (correct_axis - offset).angle()
+        
+        # print("Angulo desej: ", approach_angle * 180 / 3.14, "// correct axis: ", correct_axis, "// offset: ", offset)
 
         return self.univector.get_angle(
             origin_position,
