@@ -34,12 +34,13 @@ class Navigator:
     def get_angle(self, origin_position: Vec2D,
                         target_position: Vec2D,
                         obstacles_pos: List[Vec2D],
-                        obstacles_speed: List[Vec2D] = None) -> float:
+                        obstacles_speed: List[Vec2D] = None,
+                        add_border_obst: bool = True) -> float:
 
         # Método reponsável por determinar o ângulo de aproxição do robô ao utilizar o Univector
 
         section_num = univector_pos_section(target_position)
-
+            
         if section_num == ArenaSections.CENTER:
             goal_pos = goal_position(self.team_side)
             correct_axis = goal_pos - target_position
@@ -58,13 +59,14 @@ class Navigator:
         offset = self._get_correct_offset(target_position, section_num) 
         approach_angle = (correct_axis - offset).angle()
         
-        # print("Angulo desej: ", approach_angle * 180 / 3.14, "// correct axis: ", correct_axis, "// offset: ", offset)
+        print("Angulo desej: ", approach_angle * 180 / 3.14, "// correct axis: ", correct_axis, "// offset: ", offset, "// border obst: ", add_border_obst)
 
         return self.univector.get_angle(
             origin_position,
             target_position,
             approach_angle,
-            obstacles_pos,
-            obstacles_speed
+            obstacles_pos=obstacles_pos,
+            obstacles_speed=obstacles_speed,
+            add_border_obst=add_border_obst
         )
         

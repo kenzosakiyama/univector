@@ -301,7 +301,8 @@ class UnivectorField:
                         target_pos: Vec2D,
                         desired_approach_angle: float,
                         obstacles_pos: List[Vec2D],
-                        obstacles_speed: List[Vec2D] = None) -> float:
+                        obstacles_speed: List[Vec2D] = None,
+                        add_border_obst: bool = True) -> float:
         # Método principal que irá executar o algoritmo de navegação
         vec2follow = create_unit_vector_from_angle(desired_approach_angle)
         self.mv2Goal.update_axis(target_pos, vec2follow)
@@ -319,9 +320,10 @@ class UnivectorField:
         # TODO: adicionando bordas como sendo "obstáculos"
         # TODO: se funcionar da para remover o len(obstacles_pos)
         # Adicionando bordas da arena como "obstáculos", utilizando a posição X da origem da navegação como referência
-        obstacles_pos = obstacles_pos.copy()
-        obstacles_pos.append( Vec2D(origin_pos[0], 0) )   # Borda inferior
-        obstacles_pos.append( Vec2D(origin_pos[0], 130) ) # Borda superior
+        if add_border_obst:
+            obstacles_pos = obstacles_pos.copy()
+            obstacles_pos.append( Vec2D(origin_pos[0], 0) )   # Borda inferior
+            obstacles_pos.append( Vec2D(origin_pos[0], 130) ) # Borda superior
 
         has_obstacles = len(obstacles_pos) > 0
 
