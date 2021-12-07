@@ -70,3 +70,36 @@ class Navigator:
             add_border_obst=add_border_obst
         )
         
+
+class NaiveNavigator(Navigator):
+
+    '''
+        Classe responsável por interfacear o Univector.
+    '''
+
+    def get_angle(self, origin_position: Vec2D,
+                        target_position: Vec2D,
+                        obstacles_pos: List[Vec2D],
+                        obstacles_speed: List[Vec2D] = None,
+                        add_border_obst: bool = True) -> float:
+
+        # Método reponsável por determinar o ângulo de aproxição do robô ao utilizar o Univector
+
+        section_num = univector_pos_section(target_position)
+
+        goal_pos = goal_position(self.team_side)
+        correct_axis = goal_pos - target_position
+
+        approach_angle = correct_axis.angle()
+        
+        # print("Angulo desej: ", approach_angle * 180 / 3.14, "// correct axis: ", correct_axis, "// border obst: ", add_border_obst)
+
+        return self.univector.get_angle(
+            origin_position,
+            target_position,
+            approach_angle,
+            obstacles_pos=obstacles_pos,
+            obstacles_speed=obstacles_speed,
+            add_border_obst=add_border_obst
+        )
+        

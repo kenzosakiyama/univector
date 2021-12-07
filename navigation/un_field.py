@@ -211,7 +211,6 @@ class UnivectorField:
                        KR: float,
                        K0: float,
                        DMIN: float,
-
                        LDELTA: float):
 
         # Constantes
@@ -322,8 +321,14 @@ class UnivectorField:
         # Adicionando bordas da arena como "obstáculos", utilizando a posição X da origem da navegação como referência
         if add_border_obst:
             obstacles_pos = obstacles_pos.copy()
+            obstacles_speed = obstacles_speed.copy()
+
             obstacles_pos.append( Vec2D(origin_pos[0], 0) )   # Borda inferior
             obstacles_pos.append( Vec2D(origin_pos[0], 130) ) # Borda superior
+
+            obstacles_speed.append(Vec2D.origin())
+            obstacles_speed.append(Vec2D.origin())
+
 
         has_obstacles = len(obstacles_pos) > 0
 
@@ -335,8 +340,15 @@ class UnivectorField:
 
             fi_auf = self.avdObsField.fi_auf(origin_pos, _vPos=closest_center, _theta=True)
 
-        # Caso o robô esteja próximo a um obstáculo
-        if min_distance <= self.DMIN:
+        # TODO: Gambitar uma forma de customizar o DMIN para as bordas. 1/2cm talves?
+        # Adicionar mais um if aqui para checar se o closest_center é uma borda
+        # Customizar raio das bordas
+
+        # GAMBIARRA
+        DMIN_BORDER = 0.5
+
+        # Caso o robô esteja próximo a um obstáculo OU o obstáculo mais próximo é uma borda e sua dist é menor que o DMIN_BORDER
+        if min_distance <= self.DMIN or (has_obstacles and is_a_border(closest_center) and (min_distance < DMIN_BORDER) ):
             return fi_auf
         # Caso contrário
         else:
@@ -348,3 +360,9 @@ class UnivectorField:
                 return wrap2pi(g * diff + fi_tuf)
             else:  # if there is no obstacles
                 return fi_tuf
+
+def is_a_border(p: Vec2D) -> bool:
+    # Considerando apenas bordas laterais
+    y = p[1]
+
+    return (y == 0) or y == (130)
