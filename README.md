@@ -2,7 +2,7 @@
 
 Repositório destinado a refatorar e testar a implementação do algoritmo Univector utilizado pela equipe Ararabots.
 
-[univector demo](img/demo.png)
+![univector demo](img/demo.png)
 
 ## Instalação
 
