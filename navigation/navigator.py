@@ -17,7 +17,7 @@ class Navigator:
         self.univector = UnivectorField.from_json(univector_parameters_path)
     
 
-    def _get_correct_axis(self, position: Vec2D, section_num: ArenaSections,
+    def _get_correct_axis(self, section_num: ArenaSections,
                          attack_goal: bool = RIGHT) -> Vec2D:
 
         axis = Axis[section_num.value]
@@ -27,7 +27,8 @@ class Navigator:
 
         return axis
 
-    def _get_correct_offset(self, position: Vec2D, section_num: ArenaSections) -> Vec2D:
+    def _get_correct_offset(self, section_num: ArenaSections) -> Vec2D:
+
         return Offsets[section_num.value]
 
     # TODO: esse é um bom nome para o método?
@@ -48,14 +49,14 @@ class Navigator:
                 if section_num == ArenaSections.RIGHT_DOWN_CORNER or section_num == ArenaSections.RIGHT_UP_CORNER:
                     correct_axis = Vec2D.right()
                 else:
-                    correct_axis = self._get_correct_axis(target_position, section_num, self.attack_goal)                    
+                    correct_axis = self._get_correct_axis(section_num, self.attack_goal)                    
             else:
                 if section_num == ArenaSections.LEFT_DOWN_CORNER or section_num == ArenaSections.LEFT_UP_CORNER:
                     correct_axis = Vec2D.left()
                 else:
-                    correct_axis = self._get_correct_axis(target_position, section_num, self.attack_goal)     
+                    correct_axis = self._get_correct_axis(section_num, self.attack_goal)     
         
-        offset = self._get_correct_offset(target_position, section_num) 
+        offset = self._get_correct_offset(section_num) 
         approach_angle = (correct_axis - offset).angle()
         
         # print("Angulo desej: ", approach_angle * 180 / 3.14, "// correct axis: ", correct_axis, "// offset: ", offset)

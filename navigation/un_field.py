@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 import math
 from math import pi
 from math import cos, sin, atan2, exp, sqrt
@@ -211,7 +211,6 @@ class UnivectorField:
                        KR: float,
                        K0: float,
                        DMIN: float,
-
                        LDELTA: float):
 
         # Constantes
@@ -239,7 +238,7 @@ class UnivectorField:
         return cls(**parameters)
     
     @classmethod
-    def from_dict(cls, parameters_dict: str):
+    def from_dict(cls, parameters_dict: Dict[float, str]):
         # Cria uma instância do Univector a partir de um dicionário com os parâmetros. 
         # Utilize os mesmos nomes do contrutor do Univcetor para as chaves!
         return cls(**parameters_dict)
